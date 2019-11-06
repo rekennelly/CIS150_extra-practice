@@ -27,6 +27,12 @@ vector<int> translateToNumbers(string text)
     {
         for (int letterIndex = 0; letterIndex < ALPHABET.size(); letterIndex++)
         {
+            // Store spaces as -100
+            if (text.at(messageIndex) == ' ')
+            {
+                messageInNumbers.push_back(-100);
+                break;
+            }
             if (text.at(messageIndex) == ALPHABET.at(letterIndex))
             {
                 messageInNumbers.push_back(letterIndex);
@@ -45,9 +51,15 @@ string translateToLetters(vector<int> textInNumbers)
     {
         for (int letterIndex = 0; letterIndex < ALPHABET.size(); letterIndex++)
         {
-            if (letterIndex == textInNumbers.at(textIndex))
+            if (textInNumbers.at(textIndex) == -100)
+            {
+                message.append(" ");
+                break;
+            }
+            else if (letterIndex == textInNumbers.at(textIndex))
             {
                 message += ALPHABET.at(letterIndex);
+                break;
             }
         }
     }
@@ -58,11 +70,14 @@ vector<int> modValuesInVectorBy26(vector<int> vector)
 {
     for (int index = 0; index < vector.size(); index++)
     {
-        if (vector.at(index) < 0)
+        if (vector.at(index) < 0 && vector.at(index) != -100)
         {
             vector.at(index) += 26;
         }
-        vector.at(index) = vector.at(index) % 26;
+        if (vector.at(index) != -100)
+        {
+            vector.at(index) = vector.at(index) % 26;
+        }
     }
     return vector;
 }
@@ -88,7 +103,9 @@ string encryptString(string message, int key)
     // Add key to message in numbers
     for (int index = 0; index < messageInNumbers.size(); index++)
     {
-        messageInNumbers.at(index) += key;
+        if (messageInNumbers.at(index) != -100) {
+            messageInNumbers.at(index) += key;
+        }
     }
     
     // Mod by 26
@@ -112,7 +129,9 @@ string decryptString(string ciphertext, int key)
     // Subtract the key
     for (int index = 0; index < cipherInNumbers.size(); index++)
     {
-        cipherInNumbers.at(index) -= key;
+        if (cipherInNumbers.at(index) != -100) {
+            cipherInNumbers.at(index) -= key;
+        }
     }
     
     // Mod by 26
@@ -125,11 +144,11 @@ string decryptString(string ciphertext, int key)
 }
 
 int main() {
-    cout << encryptString("stop", 11) << endl;
-    cout << encryptString("experience", 7) << endl;
-    
-    cout << decryptString("lewlyplujl", 7) << endl;
-    cout << decryptString("deza", 11) << endl;
+//    cout << encryptString("stop", 11) << endl;
+//    cout << encryptString("experience", 7) << endl;
+//    
+//    cout << decryptString("lewlyplujl", 7) << endl;
+//    cout << decryptString("deza", 11) << endl;
     
     bool userStillPlaying = true;
     
