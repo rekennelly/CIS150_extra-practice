@@ -12,6 +12,7 @@
 using namespace std;
 
 const vector<char> ALPHABET = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
+const int SPACE_KEY = -100;
 
 vector<int> translateToNumbers(string text)
 {
@@ -27,10 +28,10 @@ vector<int> translateToNumbers(string text)
     {
         for (int letterIndex = 0; letterIndex < ALPHABET.size(); letterIndex++)
         {
-            // Store spaces as -100
+            // Store spaces as SPACE_KEY
             if (text.at(messageIndex) == ' ')
             {
-                messageInNumbers.push_back(-100);
+                messageInNumbers.push_back(SPACE_KEY);
                 break;
             }
             if (text.at(messageIndex) == ALPHABET.at(letterIndex))
@@ -51,7 +52,7 @@ string translateToLetters(vector<int> textInNumbers)
     {
         for (int letterIndex = 0; letterIndex < ALPHABET.size(); letterIndex++)
         {
-            if (textInNumbers.at(textIndex) == -100)
+            if (textInNumbers.at(textIndex) == SPACE_KEY)
             {
                 message.append(" ");
                 break;
@@ -70,11 +71,11 @@ vector<int> modValuesInVectorBy26(vector<int> vector)
 {
     for (int index = 0; index < vector.size(); index++)
     {
-        if (vector.at(index) < 0 && vector.at(index) != -100)
+        if (vector.at(index) < 0 && vector.at(index) != SPACE_KEY)
         {
             vector.at(index) += 26;
         }
-        if (vector.at(index) != -100)
+        if (vector.at(index) != SPACE_KEY)
         {
             vector.at(index) = vector.at(index) % 26;
         }
@@ -103,7 +104,7 @@ string encryptString(string message, int key)
     // Add key to message in numbers
     for (int index = 0; index < messageInNumbers.size(); index++)
     {
-        if (messageInNumbers.at(index) != -100) {
+        if (messageInNumbers.at(index) != SPACE_KEY) {
             messageInNumbers.at(index) += key;
         }
     }
@@ -129,7 +130,7 @@ string decryptString(string ciphertext, int key)
     // Subtract the key
     for (int index = 0; index < cipherInNumbers.size(); index++)
     {
-        if (cipherInNumbers.at(index) != -100) {
+        if (cipherInNumbers.at(index) != SPACE_KEY) {
             cipherInNumbers.at(index) -= key;
         }
     }
