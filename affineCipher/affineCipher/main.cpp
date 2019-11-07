@@ -74,7 +74,7 @@ vector<int> modValuesInVectorBy26(vector<int> vector)
 {
     for (int index = 0; index < vector.size(); index++)
     {
-        if (vector.at(index) < 0 && vector.at(index) != SPACE_KEY)
+        while (vector.at(index) < 0 && vector.at(index) != SPACE_KEY)
         {
             vector.at(index) += 26;
         }
