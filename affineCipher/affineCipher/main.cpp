@@ -13,8 +13,8 @@
 
 using namespace std;
 
-const vector<char> ALPHABET = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
-
+const vector<char> ALPHABET = {'A','B','C','D','E','F','G','H','I','J','K','L','M',
+                               'N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
 const int SPACE_KEY = -100;
 
 vector<int> translateToNumbers(string text)
@@ -143,9 +143,9 @@ vector<int> getKey()
     {
         cout << "26 and a must be relatively prime. Choose a different value for a: " << endl;
         getline(cin, userInputA);
+        keyA = convertKeyStringInputToInt(userInputA);
     }
     
-    keyA = convertKeyStringInputToInt(userInputA);
     
     vector<int> key = {keyA, keyB};
     
@@ -213,12 +213,6 @@ string decryptString(string ciphertext, vector<int> key)
 
 
 int main() {
-    cout << encryptString("monday", {3,2}) << endl;
-    cout << encryptString("exam", {3,2}) << endl;
-    
-    cout << decryptString("otcm", {3,2}) << endl;
-    cout << decryptString("msplcw", {3,2}) << endl;
-    
     bool userWantsToContinue = true;
     
     while (userWantsToContinue)
